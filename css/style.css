@@ -95,3 +95,16 @@
     width: 100%;
     height: 100%;
 }
+
+li {
+    margin: 10px;
+    border-bottom: dotted 1px grey;
+}
+
+li a {
+    color: white;
+}
+
+li a:hover {
+    color: grey;
+}
