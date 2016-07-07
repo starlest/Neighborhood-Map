@@ -12,18 +12,6 @@
     padding: 0;
     border: 0;
     position: relative;
-
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-
-    -webkit-transition: 300ms ease all;
-    transition: 300ms ease all;
-
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
 }
 
 .site-canvas {
@@ -88,6 +76,10 @@
     background: black;
 }
 
+.site-menu .btn-default {
+    background-color: lightskyblue;
+}
+
 .navbar-toggle {
     display: block;
     margin-left: 10px;
@@ -99,3 +91,6 @@
     border: 0;
 }
 
+.map {
+    height: 100%;
+}
