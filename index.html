@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Neighborhood map</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='css/bootstrap.min.css' rel='stylesheet'>
+        <link href='css/style.css' rel='stylesheet'>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-static-top">
+
+                <button type="button" class="navbar-toggle pull-left toggle-nav"
+                        aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+        </nav>
+
+        <div class="site-wrapper">
+            <div class="site-canvas">
+                <div class="site-menu">
+                </div>
+            </div>
+        </div>
+
+        <script
+                src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+        </script>
+        <script src='js/bootstrap.min.js'></script>
+
+        <script>
+            $(function () {
+                $('.toggle-nav').click(function () {
+                    // Calling a function in case you want to expand upon this.
+                    toggleNav();
+                });
+            });
+
+            function toggleNav() {
+                if ($('.site-wrapper').hasClass('show-nav')) {
+                    $('.site-wrapper').removeClass('show-nav');
+                } else {
+                    $('.site-wrapper').addClass('show-nav');
+                }
+            }
+        </script>
+    </body>
+</html>
