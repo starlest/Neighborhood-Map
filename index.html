@@ -23,6 +23,7 @@
 
         <div class="site-wrapper">
             <div class="site-canvas">
+                TESTSFASDAd
                 <div class="site-menu">
                 </div>
             </div>
@@ -43,8 +44,12 @@
 
             function toggleNav() {
                 if ($('.site-wrapper').hasClass('show-nav')) {
+                    // Logic here if browser doesn't support/have CSS3 Transforms
+                    $('.site-wrapper').css('margin-right', '0px');
                     $('.site-wrapper').removeClass('show-nav');
                 } else {
+                    // Logic here if browser doesn't support/have CSS3 Transforms
+                    $('.site-wrapper').css('margin-right', '-300px');
                     $('.site-wrapper').addClass('show-nav');
                 }
             }
