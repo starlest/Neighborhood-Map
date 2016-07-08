@@ -33,8 +33,8 @@ var Location = function (data) {
     var self = this;
 
     this.marker.addListener('click', function () {
-        toggleBounce(self.marker);
         showInfo(self.marker);
+        toggleBounce(self.marker);
     });
 };
 
@@ -59,6 +59,8 @@ function showInfo(marker) {
         infowindow.open(map, marker);
     }, 6000);
 
+    infowindow.open(map, marker);
+
     $.ajax({
         url: wikiUrl,
         dataType: 'jsonp',
@@ -78,7 +80,6 @@ function showInfo(marker) {
 
             clearTimeout(wikiRequestTimeout);
             infowindow.setContent(contentString);
-            infowindow.open(map, marker);
         }
     });
 }
@@ -107,8 +108,8 @@ var ViewModel = function () {
     });
 
     this.showLocation = function (clickedLocation) {
-        toggleBounce(clickedLocation.marker);
         showInfo(clickedLocation.marker);
+        toggleBounce(clickedLocation.marker);
     };
 };
 
