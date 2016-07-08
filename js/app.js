@@ -46,31 +46,38 @@ function toggleBounce(marker) {
     }, 700);
 }
 
+var infowindow;
+
 function showInfo(marker) {
-    var contentString = "";
+    var contentString = '';
     // load wikipedia data
-    var wikiUrl = "http://en.wikipedia.org/w/api.php?action=opensearch&search="
-        + marker.title + "&format=json&callback=wikiCallback";
+    var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search='
+        + marker.title + '&format=json&callback=wikiCallback';
     var wikiRequestTimeout = setTimeout(function () {
-        contentString = "Failed to get wikipedia resources";
-    }, 8000);
+        contentString = 'Failed to get wikipedia resources';
+        infowindow.setContent(contentString);
+        infowindow.open(map, marker);
+    }, 6000);
 
     $.ajax({
         url: wikiUrl,
-        dataType: "jsonp",
-        jsonp: "callback",
+        dataType: 'jsonp',
+        jsonp: 'callback',
         success: function (response) {
-            var articleList = response[2];
-            for (var i = 0; i < articleList.length; i++) {
-                articleStr = articleList[i];
-                contentString += articleStr;
-            }
-            ;
-            clearTimeout(wikiRequestTimeout);
 
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
+            var articleList = response[2];
+            if (!articleList) {
+                contentString = 'Data is not available.';
+            }
+            else {
+                for (var i = 0; i < articleList.length; i++) {
+                    articleStr = articleList[i];
+                    contentString += articleStr;
+                }
+            }
+
+            clearTimeout(wikiRequestTimeout);
+            infowindow.setContent(contentString);
             infowindow.open(map, marker);
         }
     });
@@ -80,7 +87,7 @@ var ViewModel = function () {
     var self = this;
 
     this.locationList = ko.observableArray([]);
-    this.filter = ko.observable("");
+    this.filter = ko.observable('');
 
     initialLocations.forEach(function (locationItem) {
         self.locationList.push(new Location(locationItem));
@@ -88,7 +95,7 @@ var ViewModel = function () {
 
     this.filteredLocations = ko.computed(function () {
         return ko.utils.arrayFilter(self.locationList(), function (location) {
-            if (self.filter().length == 0 ||
+            if (self.filter().length === 0 ||
                 location.title().toLowerCase().includes(self.filter().toLowerCase())) {
                 location.marker.setVisible(true);
                 return true;
@@ -99,7 +106,8 @@ var ViewModel = function () {
         });
     });
 
-    this.showLocation = function(clickedLocation) {
+    this.showLocation = function (clickedLocation) {
+        toggleBounce(clickedLocation.marker);
         showInfo(clickedLocation.marker);
     };
 };
@@ -108,20 +116,18 @@ var ViewModel = function () {
  * Initialize Google Maps.
  **/
 
-function initializeMap() {
-    setTimeout(function () {
-        if (!window.google || !window.google.maps) {
-            $('.map').text("Failed to load Google Maps.");
-        }
-    }, 5000);
-
+function initMap() {
     var singapore = new google.maps.LatLng(1.379943, 103.806161);
-    map = new google.maps.Map(document.getElementsByClassName("map")[0], {
+    map = new google.maps.Map(document.getElementsByClassName('map')[0], {
         center: singapore,
         zoom: 10
     });
+    infowindow = new google.maps.InfoWindow();
+    ko.applyBindings(new ViewModel());
 }
 
-initializeMap();
-ko.applyBindings(new ViewModel());
+function googleError() {
+    $('.map').text('Failed to load Google Maps.');
+}
+
 
